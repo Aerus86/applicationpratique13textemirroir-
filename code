@@ -1,0 +1,80 @@
+package applicationpratique13textemirroir;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+/* Pour faire un Document Listnetr ne pas oublier:
+    1 de implements le ActionListener dans public class XXXXXX extends JFrame implements ActionListener et de faire abstract (ligne 15)
+    2 de mettre un XXXXX.getDocument().addDocumentListener(new YYYYYYYYYY()); (ligne 39)
+    3 d'instancier le class myDocumentListener implements YYYYYYYYYY { en dehors de la calsse et de ET DE FAIRE implement all abstract methods !!! (ligne 58)
+    4 en suite de faire un sous classe dans notre classe qu'on a fait au point 3 et dire l'action qui doit être faite (ligne 75)
+    5 mettre en suite cette classe dans les différent Update (ligne 62, 67, 72)
+*/
+public class Fenetre extends JFrame implements ActionListener{
+    private JPanel container = new JPanel();
+    private JTextField jtf1 = new JTextField();
+    private JTextField jtf2 = new JTextField();
+    
+       
+    
+    public Fenetre (){
+        this.setTitle("Miroir à texte");
+        this.setSize(800, 100);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setResizable(false);
+        
+        // container
+        container.setLayout(new GridLayout(2,1));
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(jtf1);
+        container.add(jtf2);
+        
+        //jtf1
+        jtf1.setPreferredSize(new Dimension(600, 25));
+        jtf1.getDocument().addDocumentListener(new myDocumentListener());
+        
+        
+        //jtf2
+        jtf2.setPreferredSize(new Dimension(600, 25));
+        jtf2.setEditable(false);// pour empecher le fait qu'on puisse editer la ligne
+        jtf2.setBackground(Color.LIGHT_GRAY);
+        
+
+        this.setContentPane(container);
+        this.setVisible(true);       
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    class myDocumentListener implements DocumentListener {
+
+        @Override
+        public void insertUpdate(DocumentEvent de) {
+            changement();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent de) {
+            changement();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent de) {
+            changement();
+        }
+        
+        public void changement(){
+            jtf2.setText(jtf1.getText());
+        }
+ 
+    }
+}
